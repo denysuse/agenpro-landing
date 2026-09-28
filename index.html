@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgenPro — Sales Funnel untuk Agen Asuransi</title>
+<meta name="description" content="Aplikasi manajemen prospek & nasabah untuk agen asuransi. Trial gratis 5 hari.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1e40af;
+  --primary-light: #3b82f6;
+  --primary-dark: #1e3a8a;
+  --accent: #06b6d4;
+  --accent-2: #8b5cf6;
+  --gradient-1: linear-gradient(135deg, #1e40af 0%, #06b6d4 100%);
+  --gradient-2: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  --gradient-3: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+  --bg: #ffffff;
+  --bg-alt: #f8fafc;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --card: #ffffff;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 40px rgba(30, 64, 175, 0.15);
+}
+
+[data-theme="dark"] {
+  --bg: #0a0e1a;
+  --bg-alt: #111827;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #1e293b;
+  --card: #131c2e;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2);
+  --shadow-lg: 0 12px 40px rgba(59, 130, 246, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ============ ANIMATED BACKGROUND ============ */
+.bg-blobs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: blobFloat 20s ease-in-out infinite;
+}
+
+.blob-1 {
+  width: 500px;
+  height: 500px;
+  background: var(--primary);
+  top: -200px;
+  left: -200px;
+  animation-delay: 0s;
+}
+
+.blob-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent);
+  top: 40%;
+  right: -150px;
+  animation-delay: -7s;
+}
+
+.blob-3 {
+  width: 450px;
+  height: 450px;
+  background: var(--accent-2);
+  bottom: -150px;
+  left: 30%;
+  animation-delay: -14s;
+}
+
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -60px) scale(1.1); }
+  66% { transform: translate(-30px, 40px) scale(0.95); }
+}
+
+/* ============ NAVBAR ============ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 16px 32px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--gradient-1);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--primary-light);
+}
+
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  border-color: var(--primary-light);
+}
+
+.mobile-menu {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* ============ HERO ============ */
+.hero {
+  padding: 140px 32px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 50px;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary-light);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.hero-badge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.gradient-text {
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+.hero p {
+  font-size: 18px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  max-width: 500px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: var(--gradient-1);
+  color: white;
+  box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(30, 64, 175, 0.4);
+}
+
+.btn-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary-light);
+  color: var(--primary-light);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.btn:hover::before {
+  transform: translateX(100%);
+}
+
+.hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone-mock {
+  width: 280px;
+  height: 560px;
+  border-radius: 40px;
+  background: var(--gradient-1);
+  padding: 12px;
+  box-shadow: 0 24px 60px rgba(30, 64, 175, 0.3);
+  position: relative;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  background: var(--bg-alt);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 24px;
+  background: #000;
+  border-radius: 50px;
+  z-index: 10;
+}
+
+.phone-content {
+  padding: 50px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mock-header {
+  height: 60px;
+  border-radius: 12px;
+  background: var(--gradient-1);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.mock-card {
+  height: 80px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideIn 0.6s backwards;
+}
+
+.mock-card:nth-child(2) { animation-delay: 0.1s; }
+.mock-card:nth-child(3) { animation-delay: 0.2s; }
+.mock-card:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.mock-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gradient-2);
+  flex-shrink: 0;
+}
+
+.mock-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mock-line {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+}
+
+.mock-line.short { width: 60%; }
+.mock-line.badge {
+  width: 40%;
+  background: var(--gradient-3);
+}
+
+/* ============ STATS ============ */
+.stats {
+  padding: 60px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 40px;
+  border-radius: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ============ SECTION ============ */
+section {
+  padding: 80px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 50px;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary-light);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.section-header h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.section-header p {
+  color: var(--text-muted);
+  font-size: 17px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ============ FEATURES ============ */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.feature-card {
+  padding: 28px;
+  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-1);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
+}
+
+.feature-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  margin-bottom: 18px;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.feature-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  color: var(--text-muted);
+  font-size: 14.5px;
+}
+
+/* ============ STEPS ============ */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.step-card {
+  padding: 28px 24px;
+  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  text-align: center;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gradient-1);
+  color: white;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+}
+
+.step-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.step-card p {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ============ FAQ ============ */
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.faq-item[open] {
+  box-shadow: var(--shadow-lg);
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.faq-item summary {
+  padding: 20px 24px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15.5px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: color 0.2s;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '+';
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--primary-light);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item summary:hover {
+  color: var(--primary-light);
+}
+
+.faq-content {
+  padding: 0 24px 20px;
+  color: var(--text-muted);
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+/* ============ CTA ============ */
+.cta-box {
+  padding: 60px 40px;
+  border-radius: 32px;
+  background: var(--gradient-1);
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(30, 64, 175, 0.4);
+}
+
+.cta-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+}
+
+.cta-box::after {
+  content: '';
+  position: absolute;
+  bottom: -50%;
+  left: -10%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+}
+
+.cta-box h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-box p {
+  font-size: 17px;
+  opacity: 0.9;
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-box .btn {
+  background: white;
+  color: var(--primary);
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.cta-box .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+
+.cta-box .btn-secondary-light {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.cta-box .btn-secondary-light:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ============ FOOTER ============ */
+footer {
+  padding: 60px 32px 32px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-col h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.footer-col p,
+.footer-col a {
+  color: var(--text-muted);
+  font-size: 14px;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.footer-col a:hover {
+  color: var(--primary-light);
+}
+
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: var(--text-muted);
+  font-size: 13.5px;
+}
+
+/* ============ SCROLL REVEAL ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============ SCROLL TO TOP ============ */
+.scroll-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gradient-1);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  z-index: 99;
+}
+
+.scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scroll-top:hover {
+  transform: translateY(-4px);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 968px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 40px;
+    padding: 120px 24px 60px;
+  }
+  .hero p { margin-left: auto; margin-right: auto; }
+  .hero-cta { justify-content: center; }
+  .features-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+  .mobile-menu { display: grid; place-items: center; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); padding: 24px; }
+}
+
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  section { padding: 60px 20px; }
+  .cta-box { padding: 40px 24px; }
+  .phone-mock { width: 240px; height: 480px; }
+}
+
+/* ============ ANIMATION ============ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Animated Background -->
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<!-- Navbar -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">A</div>
+      AgenPro
+    </a>
+    <ul class="nav-links">
+      <li><a href="#fitur">Fitur</a></li>
+      <li><a href="#install">Cara Install</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#download">Download</a></li>
+    </ul>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+      <button class="mobile-menu" onclick="toggleMobileMenu()">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div>
+    <div class="hero-badge">
+      <span class="dot"></span>
+      v1.2.0 — Trial 5 Hari Gratis
+    </div>
+    <h1>
+      Kelola Prospek Asuransi<br>
+      <span class="gradient-text">Lebih Cerdas & Cepat</span>
+    </h1>
+    <p>
+      AgenPro adalah aplikasi sales funnel untuk agen asuransi.
+      Kelola prospek, nasabah, polis, pembayaran premi, dan agenda follow-up
+      dalam satu aplikasi.
+    </p>
+    <div class="hero-cta">
+      <a href="https://github.com/denysuse/agenpro-releases/releases/latest" class="btn btn-primary">
+        📥 Download APK
+      </a>
+      <a href="#fitur" class="btn btn-secondary">
+        Lihat Fitur →
+      </a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="phone-mock">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="phone-content">
+          <div class="mock-header">AgenPro</div>
+          <div class="mock-card">
+            <div class="mock-avatar"></div>
+            <div class="mock-lines">
+              <div class="mock-line"></div>
+              <div class="mock-line short"></div>
+              <div class="mock-line badge"></div>
+            </div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-avatar" style="background:var(--gradient-3)"></div>
+            <div class="mock-lines">
+              <div class="mock-line"></div>
+              <div class="mock-line short"></div>
+              <div class="mock-line badge"></div>
+            </div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-avatar" style="background:var(--gradient-2)"></div>
+            <div class="mock-lines">
+              <div class="mock-line"></div>
+              <div class="mock-line short"></div>
+              <div class="mock-line badge"></div>
+            </div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-avatar"></div>
+            <div class="mock-lines">
+              <div class="mock-line"></div>
+              <div class="mock-line short"></div>
+              <div class="mock-line badge"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stats-grid reveal">
+    <div class="stat-item">
+      <div class="stat-value" data-count="5">0</div>
+      <div class="stat-label">Hari Trial Gratis</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" data-count="10" data-suffix="+">0</div>
+      <div class="stat-label">Fitur Utama</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" data-count="100" data-suffix="%">0</div>
+      <div class="stat-label">Data Lokal Aman</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" data-count="0" data-prefix="Rp ">Rp 0</div>
+      <div class="stat-label">Gratis Coba</div>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<section id="fitur">
+  <div class="section-header reveal">
+    <span class="section-tag">✨ Fitur</span>
+    <h2>Semua yang Agen Butuhkan</h2>
+    <p>Dari prospek pertama sampai nasabah loyal — AgenPro bantu Anda tracking semuanya.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon">📋</div>
+      <h3>Pipeline Prospek</h3>
+      <p>Kelola 5 tahap: Prospek, Kualifikasi, Presentasi, Proposal, Closing.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">👥</div>
+      <h3>Database Nasabah</h3>
+      <p>Multiple polis per nasabah. Kelola identitas, kontak, dan domisili.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">💰</div>
+      <h3>Dashboard Premi</h3>
+      <p>APE (Annualized Premium Equivalent), target bulanan/tahunan, grafik tren 6 bulan.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">⏰</div>
+      <h3>Reminder Otomatis</h3>
+      <p>Pengingat jatuh tempo premi (H-30/H-7/H-1) & agenda follow-up.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">💬</div>
+      <h3>WhatsApp 1-tap</h3>
+      <p>Kirim pesan WhatsApp dengan template yang bisa dikustomisasi.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🔐</div>
+      <h3>PIN Lock & Backup</h3>
+      <p>Amankan data dengan PIN. Backup terenkripsi ke perangkat.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">📤</div>
+      <h3>Export/Import CSV</h3>
+      <p>Ekspor laporan ke Excel. Import prospek & polis secara bulk.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🌙</div>
+      <h3>Dark Mode</h3>
+      <p>Multi-tema (Hijau, Navy, Merah) + mode gelap untuk mata nyaman.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">📱</div>
+      <h3>Responsive</h3>
+      <p>Layout optimal di HP & tablet. Support Android 8.0+.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How to Install -->
+<section id="install">
+  <div class="section-header reveal">
+    <span class="section-tag">🚀 Instalasi</span>
+    <h2>Cara Install — 4 Langkah</h2>
+    <p>Install dalam 2 menit tanpa registrasi.</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card reveal">
+      <div class="step-number">1</div>
+      <h3>Download APK</h3>
+      <p>Klik tombol download di halaman ini</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-number">2</div>
+      <h3>Izinkan Install</h3>
+      <p>Aktifkan "Install from Unknown Sources"</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-number">3</div>
+      <h3>Install Aplikasi</h3>
+      <p>Tap file APK → Install</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-number">4</div>
+      <h3>Mulai Pakai</h3>
+      <p>Isi profil & mulai kelola prospek</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Download -->
+<section id="download">
+  <div class="cta-box reveal">
+    <h2>Siap Coba AgenPro?</h2>
+    <p>Trial gratis 5 hari. Tidak perlu registrasi, tidak perlu kartu kredit. Data tersimpan 100% di HP Anda.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;">
+      <a href="https://github.com/denysuse/agenpro-releases/releases/latest" class="btn">
+        📥 Download APK
+      </a>
+      <a href="https://github.com/denysuse/agenpro-releases/raw/main/docs/USER_MANUAL.pdf" class="btn btn-secondary-light">
+        📖 Panduan PDF
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-header reveal">
+    <span class="section-tag">❓ FAQ</span>
+    <h2>Pertanyaan Umum</h2>
+    <p>Belum yakin? Cek jawaban di bawah.</p>
+  </div>
+  <div class="faq-list">
+    <details class="faq-item reveal">
+      <summary>Apakah data saya aman?</summary>
+      <div class="faq-content">
+        Ya. Semua data tersimpan lokal di HP Anda (Room database). Kami tidak memiliki akses ke data Anda. Backup terenkripsi dengan PIN.
+      </div>
+    </details>
+    <details class="faq-item reveal">
+      <summary>Apakah butuh internet?</summary>
+      <div class="faq-content">
+        Tidak untuk fungsi utama. Internet hanya untuk backup Google Drive (opsional) dan update aplikasi.
+      </div>
+    </details>
+    <details class="faq-item reveal">
+      <summary>Apakah aplikasi gratis?</summary>
+      <div class="faq-content">
+        Trial gratis 5 hari. Setelah itu hubungi WhatsApp +62 812-7707-7838 untuk info lisensi.
+      </div>
+    </details>
+    <details class="faq-item reveal">
+      <summary>Bagaimana kalau HP saya hilang?</summary>
+      <div class="faq-content">
+        Data akan hilang kecuali Anda punya backup. Rekomendasi: backup rutin ke Google Drive atau flashdisk.
+      </div>
+    </details>
+    <details class="faq-item reveal">
+      <summary>Apakah bisa dipakai di beberapa HP?</summary>
+      <div class="faq-content">
+        Tidak secara langsung. Anda perlu backup di HP 1, lalu restore di HP 2.
+      </div>
+    </details>
+    <details class="faq-item reveal">
+      <summary>Apakah ada versi iOS?</summary>
+      <div class="faq-content">
+        Belum. Saat ini hanya tersedia untuk Android (minimal Android 8.0).
+      </div>
+    </details>
+    <details class="faq-item reveal">
+      <summary>Bagaimana cara update aplikasi?</summary>
+      <div class="faq-content">
+        Download APK versi terbaru dari halaman ini, lalu install seperti biasa. Data lama tetap tersimpan.
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo" style="margin-bottom:16px;">
+          <div class="logo-icon">A</div>
+          AgenPro
+        </div>
+        <p style="margin-top:8px;">Aplikasi sales funnel untuk agen asuransi. Kelola prospek, nasabah, polis, dan premi dalam satu aplikasi.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Produk</h4>
+        <a href="#fitur">Fitur</a>
+        <a href="#install">Cara Install</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/denysuse/agenpro-releases/releases/latest">Download</a>
+      </div>
+      <div class="footer-col">
+        <h4>Dokumentasi</h4>
+        <a href="https://github.com/denysuse/agenpro-releases/raw/main/docs/USER_MANUAL.pdf">Panduan PDF</a>
+        <a href="https://denysuse.github.io/privacy-policy/">Kebijakan Privasi</a>
+      </div>
+      <div class="footer-col">
+        <h4>Kontak</h4>
+        <a href="mailto:denysuse@gmail.com">📧 denysuse@gmail.com</a>
+        <a href="https://wa.me/6281277077838">💬 +62 812-7707-7838</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 AgenPro. All rights reserved.</div>
+      <div>Made with ❤️ in Indonesia</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
+
+<script>
+// ============ THEME TOGGLE ============
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.querySelector('.theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.theme-toggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+});
+
+// ============ SCROLL REVEAL ============
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ============ COUNTER ANIMATION ============
+function animateCounter(el) {
+  const target = parseInt(el.dataset.count, 10);
+  const prefix = el.dataset.prefix || '';
+  const suffix = el.dataset.suffix || '';
+  const duration = 1500;
+  const start = performance.now();
+
+  function update(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const value = Math.round(target * eased);
+    el.textContent = prefix + value + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+// ============ SCROLL TO TOP BUTTON ============
+window.addEventListener('scroll', () => {
+  const btn = document.querySelector('.scroll-top');
+  if (window.scrollY > 500) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+});
+
+// ============ MOBILE MENU ============
+function toggleMobileMenu() {
+  const links = document.querySelector('.nav-links');
+  const isOpen = links.style.display === 'flex';
+  if (isOpen) {
+    links.style.display = '';
+  } else {
+    links.style.display = 'flex';
+    links.style.position = 'absolute';
+    links.style.top = '100%';
+    links.style.left = '0';
+    links.style.right = '0';
+    links.style.background = 'var(--bg)';
+    links.style.flexDirection = 'column';
+    links.style.padding = '20px';
+    links.style.borderBottom = '1px solid var(--border)';
+  }
+}
+
+// Close mobile menu on link click
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    const links = document.querySelector('.nav-links');
+    if (window.innerWidth <= 968) links.style.display = '';
+  });
+});
+
+// ============ SMOOTH SCROLL ============
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+// ============ NAVBAR SCROLL EFFECT ============
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  const currentScroll = window.scrollY;
+  if (currentScroll > 50) {
+    nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
+  } else {
+    nav.style.boxShadow = 'none';
+  }
+  lastScroll = currentScroll;
+});
+</script>
+
+</body>
+</html>

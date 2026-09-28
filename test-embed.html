@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Embed Scalev/Lynk</title>
+<style>
+  body {
+    background: #f1f5f9;
+    padding: 20px;
+    margin: 0;
+    font-family: -apple-system, sans-serif;
+  }
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+<style>
+.agp *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+.agp{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0f172a;line-height:1.6;max-width:100%;overflow-x:hidden}
+
+.agp-hero{position:relative;padding:40px 20px;text-align:center;background:linear-gradient(135deg,#1e40af 0%,#06b6d4 100%);border-radius:20px;margin-bottom:20px;overflow:hidden}
+.agp-hero::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.1)}
+.agp-hero::after{content:'';position:absolute;bottom:-80px;left:-80px;width:250px;height:250px;border-radius:50%;background:rgba(255,255,255,0.08)}
+.agp-badge{display:inline-block;padding:6px 14px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:50px;color:#fff;font-size:12px;font-weight:600;margin-bottom:16px;position:relative;z-index:1}
+.agp-hero h1{color:#fff;font-size:clamp(24px,6vw,36px);font-weight:800;line-height:1.2;margin-bottom:12px;position:relative;z-index:1}
+.agp-hero p{color:rgba(255,255,255,0.9);font-size:15px;margin-bottom:24px;position:relative;z-index:1}
+.agp-btn{display:inline-block;padding:14px 28px;background:#fff;color:#1e40af;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,0.15);transition:all 0.3s;position:relative;z-index:1;border:none;cursor:pointer}
+.agp-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,0.25)}
+.agp-btn-outline{background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4);margin-left:8px}
+.agp-btn-outline:hover{background:rgba(255,255,255,0.25)}
+
+.agp-section{padding:30px 20px;background:#fff;border-radius:20px;margin-bottom:20px;border:1px solid #e2e8f0}
+.agp-section-title{text-align:center;margin-bottom:24px}
+.agp-tag{display:inline-block;padding:4px 12px;background:rgba(30,64,175,0.1);color:#3b82f6;border-radius:50px;font-size:12px;font-weight:600;margin-bottom:10px}
+.agp-section-title h2{font-size:clamp(20px,5vw,28px);font-weight:800;margin-bottom:8px;color:#0f172a}
+.agp-section-title p{color:#64748b;font-size:14px}
+
+.agp-features{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.agp-feature{padding:16px;background:#f8fafc;border-radius:14px;border:1px solid #e2e8f0;transition:all 0.3s}
+.agp-feature:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(30,64,175,0.1);border-color:#3b82f6}
+.agp-feature-icon{width:36px;height:36px;border-radius:10px;background:rgba(30,64,175,0.1);display:grid;place-items:center;font-size:18px;margin-bottom:10px}
+.agp-feature h3{font-size:14px;font-weight:700;margin-bottom:4px;color:#0f172a}
+.agp-feature p{font-size:12px;color:#64748b;line-height:1.5}
+
+.agp-steps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.agp-step{padding:16px;background:#f8fafc;border-radius:14px;text-align:center;border:1px solid #e2e8f0}
+.agp-step-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#1e40af 0%,#06b6d4 100%);color:#fff;font-weight:800;font-size:16px;display:grid;place-items:center;margin:0 auto 10px;box-shadow:0 4px 12px rgba(30,64,175,0.25)}
+.agp-step h3{font-size:13px;font-weight:700;margin-bottom:4px;color:#0f172a}
+.agp-step p{font-size:11px;color:#64748b}
+
+.agp-faq{display:flex;flex-direction:column;gap:8px}
+.agp-faq details{background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;transition:all 0.3s}
+.agp-faq details[open]{box-shadow:0 4px 16px rgba(30,64,175,0.08);border-color:#3b82f6}
+.agp-faq summary{padding:14px 16px;cursor:pointer;font-weight:600;font-size:13px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;color:#0f172a}
+.agp-faq summary::-webkit-details-marker{display:none}
+.agp-faq summary::after{content:'+';font-size:20px;font-weight:300;color:#3b82f6;transition:transform 0.3s;flex-shrink:0}
+.agp-faq details[open] summary::after{transform:rotate(45deg)}
+.agp-faq-content{padding:0 16px 14px;color:#64748b;font-size:12.5px;line-height:1.6}
+
+.agp-cta{background:linear-gradient(135deg,#1e40af 0%,#06b6d4 100%);padding:32px 20px;border-radius:20px;text-align:center;color:#fff;position:relative;overflow:hidden;margin-bottom:20px}
+.agp-cta::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.1)}
+.agp-cta h2{font-size:clamp(18px,4.5vw,24px);font-weight:800;margin-bottom:8px;position:relative;z-index:1}
+.agp-cta p{font-size:13px;opacity:0.9;margin-bottom:20px;position:relative;z-index:1}
+.agp-cta .agp-btn{position:relative;z-index:1}
+
+.agp-contact{padding:20px;background:#f8fafc;border-radius:16px;text-align:center;border:1px solid #e2e8f0}
+.agp-contact p{font-size:13px;color:#64748b;margin-bottom:12px}
+.agp-contact a{display:inline-block;padding:10px 20px;background:#25D366;color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:13px;transition:all 0.3s}
+.agp-contact a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,211,102,0.3)}
+
+.agp-footer{text-align:center;padding:20px;color:#64748b;font-size:12px}
+
+@media (min-width:640px){
+  .agp-features{grid-template-columns:repeat(3,1fr)}
+  .agp-steps{grid-template-columns:repeat(4,1fr)}
+  .agp-hero{padding:60px 30px}
+  .agp-section{padding:40px 30px}
+}
+</style>
+
+<div class="agp">
+
+  <!-- HERO -->
+  <div class="agp-hero">
+    <div class="agp-badge">✨ v1.2.0 — Trial 5 Hari Gratis</div>
+    <h1>Kelola Prospek Asuransi<br>Lebih Cerdas & Cepat</h1>
+    <p>Aplikasi sales funnel untuk agen asuransi. Kelola prospek, nasabah, polis, dan premi dalam satu aplikasi.</p>
+    <a href="https://github.com/denysuse/agenpro-releases/releases/latest" class="agp-btn">📥 Download APK</a>
+    <a href="https://github.com/denysuse/agenpro-releases/raw/main/docs/USER_MANUAL.pdf" class="agp-btn agp-btn-outline">📖 Panduan</a>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="agp-section">
+    <div class="agp-section-title">
+      <span class="agp-tag">✨ FITUR</span>
+      <h2>Semua yang Agen Butuhkan</h2>
+      <p>Dari prospek pertama sampai nasabah loyal</p>
+    </div>
+    <div class="agp-features">
+      <div class="agp-feature">
+        <div class="agp-feature-icon">📋</div>
+        <h3>Pipeline Prospek</h3>
+        <p>5 tahap: Prospek, Kualifikasi, Presentasi, Proposal, Closing.</p>
+      </div>
+      <div class="agp-feature">
+        <div class="agp-feature-icon">👥</div>
+        <h3>Database Nasabah</h3>
+        <p>Multiple polis per nasabah. Kelola identitas & kontak.</p>
+      </div>
+      <div class="agp-feature">
+        <div class="agp-feature-icon">💰</div>
+        <h3>Dashboard Premi</h3>
+        <p>APE, target bulanan/tahunan, grafik tren 6 bulan.</p>
+      </div>
+      <div class="agp-feature">
+        <div class="agp-feature-icon">⏰</div>
+        <h3>Reminder Otomatis</h3>
+        <p>Pengingat jatuh tempo premi & agenda follow-up.</p>
+      </div>
+      <div class="agp-feature">
+        <div class="agp-feature-icon">💬</div>
+        <h3>WhatsApp 1-tap</h3>
+        <p>Kirim pesan dengan template yang bisa dikustomisasi.</p>
+      </div>
+      <div class="agp-feature">
+        <div class="agp-feature-icon">🔐</div>
+        <h3>PIN Lock & Backup</h3>
+        <p>Amankan data dengan PIN. Backup terenkripsi.</p>
+      </div>
+      <div class="agp-feature">
+        <div class="agp-feature-icon">📤</div>
+        <h3>Export/Import CSV</h3>
+        <p>Ekspor laporan ke Excel. Import prospek & polis bulk.</p>
+      </div>
+      <div class="agp-feature">
+        <div class="agp-feature-icon">🌙</div>
+        <h3>Dark Mode</h3>
+        <p>Multi-tema (Hijau, Navy, Merah) + mode gelap.</p>
+      </div>
+      <div class="agp-feature">
+        <div class="agp-feature-icon">📱</div>
+        <h3>Responsive</h3>
+        <p>Layout optimal di HP & tablet. Android 8.0+.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="agp-section">
+    <div class="agp-section-title">
+      <span class="agp-tag">🚀 INSTALASI</span>
+      <h2>Cara Install — 4 Langkah</h2>
+      <p>Install dalam 2 menit tanpa registrasi</p>
+    </div>
+    <div class="agp-steps">
+      <div class="agp-step">
+        <div class="agp-step-num">1</div>
+        <h3>Download APK</h3>
+        <p>Klik tombol download di atas</p>
+      </div>
+      <div class="agp-step">
+        <div class="agp-step-num">2</div>
+        <h3>Izinkan Install</h3>
+        <p>Aktifkan "Unknown Sources"</p>
+      </div>
+      <div class="agp-step">
+        <div class="agp-step-num">3</div>
+        <h3>Install APK</h3>
+        <p>Tap file APK → Install</p>
+      </div>
+      <div class="agp-step">
+        <div class="agp-step-num">4</div>
+        <h3>Mulai Pakai</h3>
+        <p>Isi profil & kelola prospek</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="agp-section">
+    <div class="agp-section-title">
+      <span class="agp-tag">❓ FAQ</span>
+      <h2>Pertanyaan Umum</h2>
+    </div>
+    <div class="agp-faq">
+      <details>
+        <summary>Apakah data saya aman?</summary>
+        <div class="agp-faq-content">Ya. Semua data tersimpan lokal di HP Anda. Kami tidak memiliki akses ke data Anda. Backup terenkripsi dengan PIN.</div>
+      </details>
+      <details>
+        <summary>Apakah butuh internet?</summary>
+        <div class="agp-faq-content">Tidak untuk fungsi utama. Internet hanya untuk backup Google Drive (opsional) dan update aplikasi.</div>
+      </details>
+      <details>
+        <summary>Apakah aplikasi gratis?</summary>
+        <div class="agp-faq-content">Trial gratis 5 hari. Setelah itu hubungi WhatsApp kami untuk info lisensi.</div>
+      </details>
+      <details>
+        <summary>Bagaimana kalau HP saya hilang?</summary>
+        <div class="agp-faq-content">Data akan hilang kecuali Anda punya backup. Rekomendasi: backup rutin ke Google Drive atau flashdisk.</div>
+      </details>
+      <details>
+        <summary>Apakah ada versi iOS?</summary>
+        <div class="agp-faq-content">Belum. Saat ini hanya tersedia untuk Android (minimal Android 8.0).</div>
+      </details>
+      <details>
+        <summary>Bagaimana cara update aplikasi?</summary>
+        <div class="agp-faq-content">Download APK versi terbaru dari halaman ini, lalu install seperti biasa. Data lama tetap tersimpan.</div>
+      </details>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="agp-cta">
+    <h2>Siap Coba AgenPro?</h2>
+    <p>Trial gratis 5 hari. Tidak perlu registrasi, tidak perlu kartu kredit.</p>
+    <a href="https://github.com/denysuse/agenpro-releases/releases/latest" class="agp-btn">📥 Download Sekarang</a>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="agp-contact">
+    <p>Butuh bantuan atau aktivasi lisensi?</p>
+    <a href="https://wa.me/6281277077838?text=Halo,%20saya%20tertarik%20dengan%20AgenPro" target="_blank">💬 Chat WhatsApp</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="agp-footer">
+    © 2026 AgenPro. All rights reserved.
+  </div>
+
+</div>
+</div>
+</body>
+</html>
